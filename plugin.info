@@ -1,0 +1,8 @@
+{
+    "title": "$:/plugins/gt6796c/flowchart-tw5",
+    "description": "summary of the plugin's purpose",
+    "author": "Nathaniel Jones",
+    "version": "0.0.1",
+    "core-version": ">=5.0.8",
+    "plugin-type": "plugin"
+}

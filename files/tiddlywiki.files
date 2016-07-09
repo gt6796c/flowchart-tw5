@@ -1,0 +1,24 @@
+{
+    "tiddlers": [
+    {
+        "file": "flowchart.min.js",
+        "fields": {
+            "type": "application/javascript",
+            "title": "$:/plugins/gt6796c/flowchart-tw5/flowchart.min.js",
+            "module-type": "library"
+        },
+        "prefix": "(function(document) {\n",
+        "suffix": "\n})($tw.node ? $tw.fakeDocument : window.document)\n"
+    } ,
+    {
+        "file": "raphael.min.js",
+        "fields": {
+            "type": "application/javascript",
+            "title": "$:/plugins/gt6796c/flowchart-tw5/raphael.min.js",
+            "module-type": "library"
+        },
+        "prefix": "(function(document) {\n",
+        "suffix": "\n})($tw.node ? $tw.fakeDocument : window.document)\n"
+    }
+]
+}
