@@ -34,25 +34,36 @@ module-type: widget
         
         var height = this.getAttribute("height", "500px");
         var width = this.getAttribute("width", "500px");
+        
         var scriptBody = this.parseTreeNode.children[0].text;
         var divNode = this.document.createElement("div");
-        divNode.setAttribute("class", "jxgbox");
+        var options = {};
         divNode.setAttribute("style", "height:" + height + ";width:" + width);
         divNode.setAttribute("id", "canvas_" + uniqueID);
-        var diagram = flowchart.parse(scriptBody);
         parent.insertBefore(divNode, nextSibling);
         try {
-            diagram.drawSVG('canvas_' + uniqueID, {
-                'flowstate': {
-                    'past': {'fill': '#CCCCCC', 'font-size': 12},
-                    'current': {'fill': 'yellow', 'font-color': 'red', 'font-weight': 'bold'},
-                    'future': {'fill': '#FFFF99'},
-                    'request': {'fill': 'blue'},
-                    'invalid': {'fill': '#444444'},
-                    'approved': {'fill': '#58C4A3', 'font-size': 12, 'yes-text': 'APPROVED', 'no-text': 'n/a'},
-                    'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': 'n/a', 'no-text': 'REJECTED'}
+            // treat any attributes as JSON representations of options
+            // for the flow chart
+            try {
+                for (var att in this.attributes) {
+                    // we already used these in the div definition
+                    if (att == "height" || att == "width") continue;
+                    
+                    var attval = this.getAttribute(att);
+                    // allow for data from named tiddlers
+                    if ($tw.wiki.tiddlerExists(attval))
+                    {
+                        var data = $tw.wiki.getTiddlerData(attval);
+                        options[att] = data;
+                    }
+                    else {
+                        options[att] = JSON.parse(attval);
+                    }
                 }
-            });
+            }
+            catch (ex) { console.error(ex); }
+            var diagram = flowchart.parse(scriptBody);
+            diagram.drawSVG('canvas_' + uniqueID, options); 
         }
         catch(ex)
         {
