@@ -1,20 +1,30 @@
 {
     "tiddlers": [
     {
-        "file": "flowchart.min.js",
+        "file": "flowchart-latest.js",
         "fields": {
             "type": "application/javascript",
-            "title": "$:/plugins/gt6796c/flowchart-tw5/flowchart.min.js",
+            "title": "$:/plugins/gt6796c/flowchart-tw5/flowchart.js",
             "module-type": "library"
         },
         "prefix": "(function(document) {\n",
         "suffix": "\n})($tw.node ? $tw.fakeDocument : window.document)\n"
     } ,
     {
-        "file": "raphael.min.js",
+        "file": "raphael.js",
         "fields": {
             "type": "application/javascript",
-            "title": "$:/plugins/gt6796c/flowchart-tw5/raphael.min.js",
+            "title": "$:/plugins/gt6796c/flowchart-tw5/raphael.js",
+            "module-type": "library"
+        },
+        "prefix": "(function(document) {\n",
+        "suffix": "\n})($tw.node ? $tw.fakeDocument : window.document)\n"
+    } ,
+    {
+        "file": "eve.js",
+        "fields": {
+            "type": "application/javascript",
+            "title": "$:/plugins/gt6796c/flowchart-tw5/eve.js",
             "module-type": "library"
         },
         "prefix": "(function(document) {\n",

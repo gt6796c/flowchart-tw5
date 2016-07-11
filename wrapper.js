@@ -12,6 +12,11 @@ module-type: widget
      var uniqueID = 1;
 
     var Widget = require("$:/core/modules/widgets/widget.js").widget;
+    if ($tw.browser && !window.Raphael) {
+        window.eve = require("$:/plugins/gt6796c/flowchart-tw5/eve.js");
+        window.Raphael = require("$:/plugins/gt6796c/flowchart-tw5/raphael.js");
+        window.flowchart = require("$:/plugins/gt6796c/flowchart-tw5/flowchart.js");
+    }
 
     var FlowchartWidget = function(parseTreeNode, options) {
         this.initialise(parseTreeNode, options);
@@ -30,14 +35,15 @@ module-type: widget
         var height = this.getAttribute("height", "500px");
         var width = this.getAttribute("width", "500px");
         var scriptBody = this.parseTreeNode.children[0].text;
-
         var divNode = this.document.createElement("div");
         divNode.setAttribute("class", "jxgbox");
         divNode.setAttribute("style", "height:" + height + ";width:" + width);
-        divNode.setAttribute("id", "jxgbox_" + uniqueID++);
-        divNode.innerHTML="HI!" + scriptBody;
-
+        divNode.setAttribute("id", "canvas_" + uniqueID);
+        var diagram = flowchart.parse(scriptBody);
         parent.insertBefore(divNode, nextSibling);
+        diagram.drawSVG('canvas_' + uniqueID);
+
+        uniqueID++;
         
         this.domNodes.push(divNode);
     };
