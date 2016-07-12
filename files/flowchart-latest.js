@@ -519,7 +519,7 @@
             function getNextPath(s) {
                 var next = "next", startIndex = s.indexOf("(") + 1, endIndex = s.indexOf(")");
                 return startIndex >= 0 && endIndex >= 0 && (next = flowSymb.substring(startIndex, endIndex), 
-                next.indexOf(",") < 0 && "yes" !== next && "no" !== next && (next = "next, " + next)), 
+                next.indexOf(",") < 0 && "yes" !== next && "no" !== next && (next = "next, " + next)),
                 next;
             }
             input = input || "", input = input.trim();
@@ -629,7 +629,7 @@
                     }
                     if (chart.start || (chart.start = realSymb), lenS > i + 1) {
                         var nextSymb = flowSymbols[i + 1];
-                        realSymb[next] = getSymbol(nextSymb), realSymb["direction_" + next] = direction, 
+                        realSymb[next] = getSymbol(nextSymb), realSymb["direction_" + next] = direction,
                         direction = null;
                     }
                 }
@@ -645,50 +645,69 @@
     /***/
     function(module, exports, __webpack_require__) {
         function Condition(chart, options) {
-            options = options || {}, Symbol.call(this, chart, options), this.textMargin = this.getAttr("text-margin"), 
-            this.yes_direction = "bottom", this.no_direction = "right", options.yes && options.direction_yes && options.no && !options.direction_no ? "right" === options.direction_yes ? (this.no_direction = "bottom", 
+            options = options || {}, Symbol.call(this, chart, options), this.textMargin = this.getAttr("text-margin"),
+            this.yes_direction = "bottom", this.no_direction = "right", options.yes && options.direction_yes && options.no && !options.direction_no ? "right" === options.direction_yes ? (this.no_direction = "bottom",
             this.yes_direction = "right") : (this.no_direction = "right", this.yes_direction = "bottom") : options.yes && !options.direction_yes && options.no && options.direction_no ? "right" === options.direction_no ? (this.yes_direction = "bottom", 
             this.no_direction = "right") : (this.yes_direction = "right", this.no_direction = "bottom") : (this.yes_direction = "bottom", 
             this.no_direction = "right"), this.yes_direction = this.yes_direction || "bottom", 
             this.no_direction = this.no_direction || "right", this.text.attr({
                 x: 2 * this.textMargin
             });
-            var width = this.text.getBBox().width + 3 * this.textMargin;
-            width += width / 2;
-            var height = this.text.getBBox().height + 2 * this.textMargin;
-            height += height / 2, height = Math.max(.5 * width, height);
-            var startX = width / 4, startY = height / 4;
-            this.text.attr({
-                x: startX + this.textMargin / 2
-            });
-            var start = {
-                x: startX,
-                y: startY
-            }, points = [ {
-                x: startX - width / 4,
-                y: startY + height / 4
-            }, {
-                x: startX - width / 4 + width / 2,
-                y: startY + height / 4 + height / 2
-            }, {
-                x: startX - width / 4 + width,
-                y: startY + height / 4
-            }, {
-                x: startX - width / 4 + width / 2,
-                y: startY + height / 4 - height / 2
-            }, {
-                x: startX - width / 4,
-                y: startY + height / 4
-            } ], symbol = drawPath(chart, start, points);
-            symbol.attr({
-                stroke: this.getAttr("element-color"),
-                "stroke-width": this.getAttr("line-width"),
-                fill: this.getAttr("fill")
-            }), options.link && symbol.attr("href", options.link), options.target && symbol.attr("target", options.target), 
-            options.key && (symbol.node.id = options.key), symbol.node.setAttribute("class", this.getAttr("class")), 
-            this.text.attr({
-                y: symbol.getBBox().height / 2
-            }), this.group.push(symbol), symbol.insertBefore(this.text), this.initialize();
+            var symbol;
+            if (this.getAttr("shape") !== "rect") {
+                var width = this.text.getBBox().width + 3 * this.textMargin;
+                width += width / 2;
+                var height = this.text.getBBox().height + 2 * this.textMargin;
+                height += height / 2, height = Math.max(.5 * width, height);
+                var startX = width / 4, startY = height / 4;
+                this.text.attr({
+                    x: startX + this.textMargin / 2
+                });
+                var start = {
+                    x: startX,
+                    y: startY
+                }, points = [{
+                    x: startX - width / 4,
+                    y: startY + height / 4
+                }, {
+                    x: startX - width / 4 + width / 2,
+                    y: startY + height / 4 + height / 2
+                }, {
+                    x: startX - width / 4 + width,
+                    y: startY + height / 4
+                }, {
+                    x: startX - width / 4 + width / 2,
+                    y: startY + height / 4 - height / 2
+                }, {
+                    x: startX - width / 4,
+                    y: startY + height / 4
+                }], symbol = drawPath(chart, start, points);
+                symbol.attr({
+                    stroke: this.getAttr("element-color"),
+                    "stroke-width": this.getAttr("line-width"),
+                    fill: this.getAttr("fill")
+                }), options.link && symbol.attr("href", options.link), options.target && symbol.attr("target", options.target),
+                options.key && (symbol.node.id = options.key), symbol.node.setAttribute("class", this.getAttr("class")),
+                    this.text.attr({
+                        y: symbol.getBBox().height / 2
+                    });
+            }
+            else
+            {
+               symbol = this.chart.paper.rect(0,0,0,0);
+                var tmpMargin = this.getAttr("text-margin");
+                symbol.attr({
+                    fill: this.getAttr("fill"),
+                    stroke: this.getAttr("element-color"),
+                    "stroke-width": this.getAttr("line-width"),
+                    width: this.text.getBBox().width + 2 * tmpMargin,
+                    height: this.text.getBBox().height + 2 * tmpMargin
+                }), symbol.node.setAttribute("class", this.getAttr("class")), options.link && symbol.attr("href", options.link),
+                options.target && symbol.attr("target", options.target), options.key && (symbol.node.id = options.key),
+                    this.group.push(symbol), symbol.insertBefore(this.text), this.text.attr({
+                    y: symbol.getBBox().height / 2 });
+            }
+            this.group.push(symbol), symbol.insertBefore(this.text), this.initialize();
         }
         var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits, drawAPI = __webpack_require__(/*! ./flowchart.functions */ 3), drawPath = drawAPI.drawPath;
         inherits(Condition, Symbol), Condition.prototype.render = function() {
