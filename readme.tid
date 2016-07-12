@@ -1,0 +1,9 @@
+title: $:/plugins/gt6796c/flowchart-tw5/readme
+
+This is a TiddlyWiki plugin for using flowchart.js and sequence-diagram.js
+
+It is completely self-contained, and doesn't need an Internet connection in order to work. It works both in the browser and under Node.js.
+
+It is currently based on [[flowchart.js v.1.6.3|http://flowchart.js.org]] and [[js-sequence-diagrams v1.0.6|https://bramp.github.io/js-sequence-diagrams/]]
+
+[[Source code|https://github.com/gt6796c/flowchart-tw5]]

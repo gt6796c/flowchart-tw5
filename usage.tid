@@ -1,0 +1,66 @@
+title: $:/plugins/gt6796c/flowchart-tw5/usage
+
+!flowchart.js
+Use the ``<$flowchart>`` widget and place the flowchart commands within it. Any of the options that could be specified
+in the ``.drawSVG()`` options can be specified as JSON-encoded values in attributes of the same name on the widget. The
+values of the attributes can also be the title of Data Tiddlers and the values will be used from the referenced Tiddler.
+You can set the type of a Tiddler to text/vnd.tiddlywiki.flowchart and use the native commands directly in the Tiddler body. You can
+add fields that are the names below prefixed with 'flowchart'. So "scale" becomes "flowchart-scale"
+
+The available options are as follows (example values are provided)
+
+```
+{
+  "x": 0,
+  "y": 0,
+  "line-width": 3,
+  "line-length": 50,
+  "text-margin": 10,
+  "font-size": 14,
+  "font-color": "black",
+  "line-color": "black",
+  "element-color": "black",
+  "fill": "white",
+  "yes-text": "yes",
+  "no-text": "no",
+  "arrow-end": "block",
+  "scale": 1,
+  // style symbol types
+  "symbols": {
+    "start": {
+      "font-color": "red",
+      "element-color": "green",
+      "fill": "yellow"
+    },
+    "end":{
+      "class": "end-element"
+    }
+  },
+  // even flowstate support ;-)
+  "flowstate" : {
+    "past" : { "fill" : "#CCCCCC", "font-size" : 12},
+    "current" : {"fill" : "yellow", "font-color" : "red", "font-weight" : "bold"},
+    "future" : { "fill" : "#FFFF99"},
+    "request" : { "fill" : "blue"},
+    "invalid": {"fill" : "#444444"},
+    "approved" : { "fill" : "#58C4A3", "font-size" : 12, "yes-text" : "APPROVED", "no-text" : "n/a" },
+    "rejected" : { "fill" : "#C45879", "font-size" : 12, "yes-text" : "n/a", "no-text" : "REJECTED" }
+  }
+}
+```
+
+!!Notes
+*Note the backslash in the URLs... I am not sure why they are necessary at this point, but they are. If you are getting parse errors, start with removing the flowstates (stuff after the '|') and links (stuff after the ':>')
+*JSON encoding only allows double-quotes ``"`` as string delimiters
+*JSON encoding requires double-quotes around single string values
+
+!js-sequence-diagram
+Use the ``<$seqdiag>`` widget and place the js-sequence-diagram commands within it. Any of the options that can be specified
+in the ``.drawSVG()`` options variable can be specified as JSON-encoded values in attributes of the same name on the widgets.
+The values of the attributes can also be the title of Data Tiddlers and the values will be used from the referenced Tiddler.
+You can set the type of a Tiddler to text/vnd.tiddlywiki.seqdiag and use the native commands directly in the Tiddler body. You can
+add fields that are the names below prefixed with 'seqdiag'. So "theme" becomes "seqdiag-theme"
+
+!!Notes
+*JSON encoding only allows double-quotes ``"`` as string delimiters
+*JSON encoding requires double-quotes around single string values
