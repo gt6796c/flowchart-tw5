@@ -1,8 +1,10 @@
 {
     "title": "$:/plugins/gt6796c/flowchart-tw5",
-    "description": "summary of the plugin's purpose",
+    "description": "Wrappers for flowchart.js and js-sequence-diagram",
     "author": "Nathaniel Jones",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "core-version": ">=5.0.8",
-    "plugin-type": "plugin"
+    "plugin-type": "plugin",
+    "list" : "readme usage example-flowchart example-seqdiag"
+
 }
