@@ -103,7 +103,6 @@ module-type: widget
                         if (fi != 0) continue;
                         var k = f.substring(tag.length+1);
                         var v = t.fields[f];
-                        console.error(k + ":" + v);
                         // try as JSON
                         try {
                             options[k] = JSON.parse(v);
