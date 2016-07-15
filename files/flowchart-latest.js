@@ -133,7 +133,7 @@
         function Symbol(chart, options, symbol) {
             this.chart = chart, this.group = this.chart.paper.set(), this.symbol = symbol, this.connectedTo = [], 
             this.symbolType = options.symbolType, this.flowstate = options.flowstate || "future", 
-            this.next_direction = options.next && options.direction_next ? options.direction_next : void 0, 
+            this.next_direction = options.next && options.direction_next ? options.direction_next : this.getAttr("direction"),
             this.text = this.chart.paper.text(0, 0, options.text), //Raphael does not support the svg group tag so setting the text node id to the symbol node id plus t
             options.key && (this.text.node.id = options.key + "t"), this.text.node.setAttribute("class", this.getAttr("class") + "t"), 
             this.text.attr({
@@ -622,7 +622,7 @@
                     /* end of flowstate support */
                     chart.symbols[symbol.key] = symbol;
                 } else if (line.indexOf("->") >= 0) for (var flowSymbols = line.split("->"), i = 0, lenS = flowSymbols.length; lenS > i; i++) {
-                    var flowSymb = flowSymbols[i], realSymb = getSymbol(flowSymb), next = getNextPath(flowSymb), direction = null;
+                    var flowSymb = flowSymbols[i], realSymb = getSymbol(flowSymb), next = getNextPath(flowSymb), direction = realSymb.direction;
                     if (next.indexOf(",") >= 0) {
                         var condOpt = next.split(",");
                         next = condOpt[0], direction = condOpt[1].trim();
@@ -630,7 +630,7 @@
                     if (chart.start || (chart.start = realSymb), lenS > i + 1) {
                         var nextSymb = flowSymbols[i + 1];
                         realSymb[next] = getSymbol(nextSymb), realSymb["direction_" + next] = direction,
-                        direction = null;
+                        direction = realSymb.direction;
                     }
                 }
             }
@@ -828,6 +828,7 @@
             "no-text": "no",
             "arrow-end": "block",
             "class": "flowchart",
+            "direction" : null,
             scale: 1,
             symbols: {
                 start: {},
