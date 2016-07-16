@@ -156,7 +156,19 @@ module-type: widget
         try {
             var options = {};
             getOptions(this, tag, options);
-            var diagram = flowchart.parse(scriptBody);
+            
+            var symbolFactory = function (id) {
+                switch(id)
+                {
+                    case "foo":
+                        var Foo = function(Symbol, chart, options) {
+                            var symbol = chart.paper.rect(0, 0, 0, 0, 20);
+                            options = options || {}, options.text = options.text || "Foo", Symbol.call(this, chart, options, symbol);
+                        }
+                        return Foo;
+                }
+            }
+            var diagram = flowchart.parse(scriptBody, symbolFactory);
             diagram.drawSVG(divNode.id, options);
         }
         catch(ex)

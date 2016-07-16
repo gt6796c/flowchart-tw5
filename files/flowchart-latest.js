@@ -511,7 +511,7 @@
   \********************************/
     /***/
     function(module, exports, __webpack_require__) {
-        function parse(input) {
+        function parse(input, symbolFactory) {
             function getSymbol(s) {
                 var startIndex = s.indexOf("(") + 1, endIndex = s.indexOf(")");
                 return startIndex >= 0 && endIndex >= 0 ? chart.symbols[s.substring(0, startIndex - 1)] : chart.symbols[s];
@@ -523,6 +523,7 @@
                 next;
             }
             input = input || "", input = input.trim();
+            symbolFactory = symbolFactory;
             for (var chart = {
                 symbols: {},
                 start: null,
@@ -555,7 +556,15 @@
                             break;
 
                           default:
-                            return new Error("Wrong symbol type!");
+                              var sym = (symbolFactory && symbolFactory(s.symbolType))
+                              if (sym) {
+                                  diagram.options.symbols[s.symbolType] = {};
+                                  var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits;
+                                  inherits(sym, Symbol);
+                                  dispSymbols[s.key] = new sym(Symbol, diagram, s);
+                              }
+                              else
+                                return new Error("Wrong symbol type!");
                         }
                         return dispSymbols[s.key];
                     }
