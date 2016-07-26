@@ -19,6 +19,9 @@ module-type: widget
         window._ = require("$:/plugins/gt6796c/flowchart-tw5/underscore.js");
         window.Diagram = require("$:/plugins/gt6796c/flowchart-tw5/sequence-diagram.js");
     }
+    if ($tw.browser && !window.mermaidAPI) {
+        require("$:/plugins/gt6796c/flowchart-tw5/mermaidAPI.js").mermaidAPI;
+    }
 
     var FlowchartWidget = function(parseTreeNode, options) {
         this.initialise(parseTreeNode, options);
@@ -28,8 +31,12 @@ module-type: widget
 
     function getScriptBody(src,tag)
     {
-        var scriptBody="";
-        if (src.parseTreeNode.children)
+        var scriptBody= src.getAttribute("text", src.parseTreeNode.text || "");
+
+        if (src.parseTreeNode.text) {
+            scriptBody = src.parseTreeNode.text;
+        }
+        else if (src.parseTreeNode.children)
         {
             var kids = src.parseTreeNode.children;
             for (var k in kids)
@@ -61,13 +68,10 @@ module-type: widget
                 };
             }
         }
-        else if (src.parseTreeNode.text) {
-            scriptBody = src.parseTreeNode.text;
-        }
         else {
             scriptBody = "";
         }
-        
+
         return scriptBody;
 
     };
@@ -236,5 +240,52 @@ module-type: widget
     };
 
     exports.seqdiag = SequenceDiagramWidget;
-    
+
+    var MermaidWidget = function(parseTreeNode, options) {
+        this.initialise(parseTreeNode, options);
+    };
+
+    MermaidWidget.prototype = new Widget();
+
+    /*
+     Render this widget into the DOM
+     */
+    MermaidWidget.prototype.render = function(parent,nextSibling) {
+        this.parentDomNode = parent;
+        this.computeAttributes();
+        this.execute();
+
+        var tag = 'mermaid';
+        var scriptBody = getScriptBody(this,tag);
+        var divNode = getCanvas(this,tag);
+        var _insertSVG = function(svgCode, bindFunctions) {
+            divNode.innerHTML = svgCode;
+        }
+        try {
+            var options = {'theme' : 'simple'};
+            getOptions(this, tag, options);
+            mermaidAPI.render(divNode.id, scriptBody, _insertSVG);
+        }
+        catch(ex)
+        {
+            divNode.innerText = ex;
+        }
+        parent.insertBefore(divNode, nextSibling);
+
+        this.domNodes.push(divNode);
+    };
+
+    MermaidWidget.prototype.execute = function() {
+        // Nothing to do
+    };
+
+    /*
+     Selectively refreshes the widget if needed. Returns true if the widget or any of its children needed re-rendering
+     */
+    MermaidWidget.prototype.refresh = function(changedTiddlers) {
+        return false;
+    };
+
+    exports.mermaid = MermaidWidget;
+
 })();
