@@ -5,7 +5,11 @@ http://flowchart.js.org
 
 place <$flowchart> widget and then flowchart language in between tags.
 
-#TODO
+#Installation
+You can install by browsing to https://gt6796c.github.io/ and dragging the flowchart-tw5 link to your TiddlyWiki.
+
+
+# TODO
 1. ~~better error handling for preview~~
 2. ~~pass in flowstates to widget~~
 3. ~~Can't handle hyperlinks in flowchart due to what looks like a parsing bug. Probably a conflict between TW5 syntax and flowchart's (escaping the forward slashes seems to make it possible to link to external sites)~~
