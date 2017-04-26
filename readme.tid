@@ -7,3 +7,5 @@ It is completely self-contained, and doesn't need an Internet connection in orde
 It is currently based on [[flowchart.js v.1.6.3|http://flowchart.js.org]] and [[js-sequence-diagrams v1.0.6|https://bramp.github.io/js-sequence-diagrams/]]
 
 [[Source code|https://github.com/gt6796c/flowchart-tw5]]
+
+You can install by browsing to https://gt6796c.github.io/ and dragging the link to your TiddlyWiki.
