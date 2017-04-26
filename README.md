@@ -5,7 +5,7 @@ http://flowchart.js.org
 
 place <$flowchart> widget and then flowchart language in between tags.
 
-#Installation
+# Installation
 You can install by browsing to https://gt6796c.github.io/ and dragging the flowchart-tw5 link to your TiddlyWiki.
 
 
